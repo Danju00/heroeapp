@@ -1,7 +1,17 @@
+import { Navigate, useParams } from "react-router-dom"
+import { getHeroById } from "../../helpers/getHeroById";
+
 import { getHeroesByPublisher } from "../../helpers/getHeroesByPublisher"
 
 
 export const HeroList = ({ publisher }) => {
+    const { heroId } = useParams();
+
+  const hero = getHeroById(heroId);
+
+  if(!hero){
+    return <Navigate to='/' />
+  }
 
     const validPublisher = ['DC Comics', 'Marvel Comics'];
 
@@ -11,7 +21,7 @@ export const HeroList = ({ publisher }) => {
 
     const heroes = getHeroesByPublisher(publisher)
     return (
-        <>
+       
             <ul>
                 {
                     heroes.map( hero => (
@@ -21,6 +31,6 @@ export const HeroList = ({ publisher }) => {
                     ))
                 }
             </ul>
-        </>
+        
     )
 } 
